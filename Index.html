@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videojuegos Populares</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+  <div class="container mx-auto p-5">
+    <h1 class="text-3xl font-bold text-center mb-5">Videojuegos Populares</h1>
+    <div id="game-list" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+
+    <!-- Nueva sección de juegos destacados -->
+    <h2 class="text-2xl font-bold text-center mt-10">Juegos Destacados</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+      <div class="bg-gray-800 p-5 rounded-lg shadow-lg">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png" 
+             alt="Minecraft" class="w-full h-48 object-cover rounded">
+        <h2 class="text-xl font-bold mt-3 text-center">Minecraft</h2>
+      </div>
+
+      <div class="bg-gray-800 p-5 rounded-lg shadow-lg">
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png" 
+             alt="GTA 5" class="w-full h-48 object-cover rounded">
+        <h2 class="text-xl font-bold mt-3 text-center">GTA 5</h2>
+      </div>
+
+      <div class="bg-gray-800 p-5 rounded-lg shadow-lg">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Tetris_NES_cover.png" 
+             alt="Tetris" class="w-full h-48 object-cover rounded">
+        <h2 class="text-xl font-bold mt-3 text-center">Tetris</h2>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    fetch("http://localhost:3000/games")
+      .then(response => response.json())
+      .then(games => {
+        const gameList = document.getElementById("game-list");
+        games.forEach(game => {
+          const gameCard = `
+            <div class="bg-gray-800 p-5 rounded-lg shadow-lg">
+              <img src="${game.background_image}" alt="${game.name}" class="w-full h-48 object-cover rounded">
+              <h2 class="text-xl font-bold mt-3">${game.name}</h2>
+              <p class="text-gray-400">Rating: ${game.rating}</p>
+            </div>
+          `;
+          gameList.innerHTML += gameCard;
+        });
+      })
+      .catch(error => console.error("Error:", error));
+  </script>
+</body>
+</html>
